@@ -11,7 +11,7 @@ const start = async () => {
 
     await server.register(Nes);
     server.subscription('/{anything*}', {
-        onSubscribe: async (socket, path, params) => {
+        onSubscribe: async (socket, path) => {
             console.info('Client', socket.id, 'subscribed to', path);
             subscriptions[path] = (subscriptions[path] || 0) + 1;
             if (subscriptions[path] === 1) {
@@ -22,7 +22,7 @@ const start = async () => {
             }
         },
 
-        onUnsubscribe: async (socket, path, params) => {
+        onUnsubscribe: async (socket, path) => {
             console.info('Client', socket.id, 'unsubscribed from', path);
             subscriptions[path] = (subscriptions[path] || 1) - 1;
             if (subscriptions[path] === 0) {
